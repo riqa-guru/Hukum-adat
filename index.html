@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Modul Adat Istiadat Dayak – Hukum Adat</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1f3a2c;--forest2:#2d5a43;--sage:#456f58;--cream:#f2e6d0;--paper:#f8f3e6;--ink:#233229;--muted:#6b6a5c;--gold:#c79a3b;--rust:#b43f2c;--line:#dccfb2;--ok:#2d7a4f;--bad:#b43f2c}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Public Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;display:flex;min-height:100vh}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;margin:0;color:var(--forest)}
+aside{width:260px;background:var(--forest);color:#f3ecd9;padding:22px 14px;flex-shrink:0}
+aside .tag{font-size:11px;color:var(--gold)}
+aside h2{color:#fff;font-size:22px;margin:4px 0 8px}
+aside p{font-size:12px;opacity:.8;margin:0 0 16px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button{all:unset;cursor:pointer;display:flex;gap:10px;padding:9px 10px;border-radius:8px;font-size:13px}
+.nav button b{font-family:'Fraunces',serif;color:var(--gold);font-weight:600}
+.nav button small{display:block;font-size:10px;opacity:.65}
+.nav button.on{background:var(--sage)}
+.nav button:focus-visible,.tabs button:focus-visible,.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+main{flex:1;padding:24px 28px;max-width:860px;min-width:0}
+.crumb{font-size:11px;color:var(--rust)}
+main>h1{font-size:30px;margin:4px 0 12px}
+.id{display:flex;flex-wrap:wrap;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:16px}
+.id label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:3px;flex:1;min-width:150px}
+input,select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
+.tabs button{all:unset;cursor:pointer;padding:10px 14px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--rust);border-color:var(--rust)}
+.pane{display:none}.pane.on{display:block}
+.lead{border-left:3px solid var(--gold);padding:6px 14px;color:var(--muted);font-size:14px;margin-bottom:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card h3{font-size:17px;margin:2px 0 10px}
+.card .n{font-size:11px;font-weight:600;color:var(--rust)}
+.card p,.card li{font-size:14px}
+.ex{background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:13px}
+.src{font-size:12px;color:var(--muted)}
+.btn{cursor:pointer;border:0;background:var(--forest2);color:#fff;font:600 14px 'Public Sans',sans-serif;padding:10px 18px;border-radius:8px}
+.btn.alt{background:transparent;color:var(--forest);border:1px solid var(--forest)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+/* TTS */
+.tts-wrap{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+#grid{display:grid;gap:2px;overflow-x:auto;max-width:100%}
+.c{width:30px;height:30px;position:relative}
+.c.blk{background:transparent}
+.c input{width:100%;height:100%;padding:0;text-align:center;font:700 15px 'Public Sans';text-transform:uppercase;border:1px solid var(--forest2);border-radius:3px;background:#fff}
+.c input:focus{background:#fff4cf;outline:2px solid var(--gold)}
+.c.ok input{background:#d9efe0}.c.no input{background:#f6d6cf}
+.c i{position:absolute;top:0;left:2px;font:600 9px 'Public Sans';color:var(--rust);pointer-events:none;font-style:normal}
+.clues h3{font-size:15px;margin:0 0 4px}
+.clues ol{margin:0 0 12px;padding-left:20px;font-size:13px}
+@media(max-width:760px){.tts-wrap{grid-template-columns:1fr}}
+/* Kuis */
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.q p{margin:0 0 8px;font-weight:500;font-size:14px}
+.q label{display:block;padding:7px 10px;border:1px solid var(--line);border-radius:8px;margin:5px 0;font-size:13.5px;cursor:pointer;background:#fff}
+.q label.right{background:#d9efe0;border-color:var(--ok)}
+.q label.wrong{background:#f6d6cf;border-color:var(--bad)}
+.q input{margin-right:8px}
+.score{font:700 44px 'Fraunces',serif;color:var(--forest)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{background:var(--forest);color:#fff;font-weight:600}
+.msg{font-size:13px;margin:8px 0;color:var(--muted)}
+@media(max-width:760px){body{flex-direction:column}aside{width:100%}.nav{flex-direction:row;flex-wrap:wrap}.nav button{font-size:12px;padding:6px 8px}.nav button small{display:none}main{padding:18px 14px}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="tag">Muatan Lokal · SLTA · Semester Ganjil</div>
+  <h2>Adat Istiadat Dayak</h2>
+  <p>Peserta didik mengenal &amp; mampu menerapkan adat istiadat Dayak dalam kehidupan sehari-hari.</p>
+  <nav class="nav" id="nav"></nav>
+</aside>
+<main>
+  <div class="crumb">Kompetensi Dasar 1 · Pokok Bahasan 1.5</div>
+  <h1>Hukum Adat sebagai Sumber Hukum Positif</h1>
+
+  <div class="id">
+    <label>Nama siswa<input id="nama" placeholder="Tulis nama lengkap" autocomplete="name"></label>
+    <label>Kelas<select id="kelas"><option value="">Pilih kelas</option><option>XI R1</option><option>XI R2</option><option>XI R3</option><option>XI R4</option><option>XI R5</option><option>XI R6</option></select></label>
+  </div>
+
+  <div class="tabs" role="tablist" id="tabs">
+    <button data-t="materi" class="on">Materi</button>
+    <button data-t="tts">Teka-Teki Silang</button>
+    <button data-t="kuis">Kuis (20 Soal)</button>
+    <button data-t="rekap">Rekap Nilai</button>
+  </div>
+
+  <!-- MATERI -->
+  <section class="pane on" id="materi"></section>
+
+  <!-- TTS -->
+  <section class="pane" id="tts">
+    <div class="lead">Isi kotak-kotak dengan istilah yang tepat. Klik kotak lalu ketik huruf. Gunakan satu huruf per kotak.</div>
+    <div class="tts-wrap"><div id="grid"></div><div class="clues"><h3>Mendatar</h3><ol id="across"></ol><h3>Menurun</h3><ol id="down"></ol></div></div>
+    <div class="row"><button class="btn" id="ttsCheck">Periksa jawaban</button><button class="btn alt" id="ttsReveal">Tampilkan kunci</button><button class="btn alt" id="ttsSave">Simpan nilai TTS</button></div>
+    <div class="msg" id="ttsMsg"></div>
+  </section>
+
+  <!-- KUIS -->
+  <section class="pane" id="kuis">
+    <div class="lead">Pilih satu jawaban paling tepat. Tiap soal bernilai 5 poin (total 100). Isi nama dan kelas di atas sebelum mengirim.</div>
+    <div id="quiz"></div>
+    <div class="row"><button class="btn" id="qSubmit">Kirim jawaban</button><button class="btn alt" id="qReset">Ulangi kuis</button></div>
+    <div id="qResult"></div>
+  </section>
+
+  <!-- REKAP -->
+  <section class="pane" id="rekap">
+    <div class="lead">Rekap nilai tersimpan di Google Spreadsheet melalui Apps Script. Pilih kelas untuk menyaring.</div>
+    <div class="row">
+      <select id="fKelas"><option value="">Semua kelas</option><option>XI R1</option><option>XI R2</option><option>XI R3</option><option>XI R4</option><option>XI R5</option><option>XI R6</option></select>
+      <button class="btn" id="reload">Muat ulang</button>
+    </div>
+    <div class="msg" id="rMsg"></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Jenis</th><th>Nilai</th><th>Waktu</th></tr></thead><tbody id="rBody"></tbody></table></div>
+  </section>
+</main>
+
+<script>
+/* ====== PENGATURAN ====== */
+// Tempel URL Web App Google Apps Script Anda di sini (akhiran /exec)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-BahqyePN9K3Yhk63qdi8oiHA-1UQxcP0bGzQ_cL1WJHmTQDVdfHVYGL12yP_jz3C/exec";
+
+/* ====== UTIL ====== */
+const $=s=>document.querySelector(s);
+function safeLS(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"[]");localStorage.setItem(k,JSON.stringify(v))}catch(e){return []}}
+function identity(){const n=$("#nama").value.trim(),k=$("#kelas").value;return n&&k?{nama:n,kelas:k}:null}
+
+/* ====== TAB ====== */
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.id===b.dataset.t));
+  if(b.dataset.t==="rekap")loadRekap();});
+
+/* ====== MATERI ====== */
+const topics=[
+ ["1.1","Adat Istiadat sebagai Kekuatan Hidup","Adat istiadat adalah pedoman hidup yang menjaga kebersamaan, rasa hormat, dan keselarasan masyarakat Dayak dari generasi ke generasi."],
+ ["1.2","Sikap dan Perilaku sebagai Jati Diri","Sikap sopan, gotong royong, dan menghargai sesama menjadi cerminan jati diri orang Dayak dalam pergaulan sehari-hari."],
+ ["1.3","Tutur Kata sebagai Jati Diri","Tutur kata yang santun menunjukkan kepribadian dan penghormatan kepada orang tua, tamu, dan sesama warga."],
+ ["1.4","Acara Adat sebagai Bentuk Komunikasi dengan Tuhan, Alam, dan Leluhur","Upacara adat menjadi sarana menjaga hubungan manusia dengan Tuhan, alam, dan leluhur."],
+ ["1.5","Hukum Adat sebagai Sumber Hukum Positif",null],
+ ["1.6","Sanksi Adat sebagai Bentuk Pengakuan yang Tidak Terpisahkan","Sanksi adat adalah bentuk pengakuan atas pelanggaran dan upaya memulihkan hubungan yang rusak."]
+];
+let cur=4;
+function renderNav(){$("#nav").innerHTML=topics.map((t,i)=>`<button class="${i===cur?"on":""}" data-i="${i}"><b>${t[0]}</b><span>${t[1]}<small>Materi ${i+1} dari 6</small></span></button>`).join("")}
+function renderMateri(){
+  const t=topics[cur];
+  document.querySelector(".crumb").textContent="Kompetensi Dasar 1 · Pokok Bahasan "+t[0];
+  document.querySelector("main>h1").textContent=t[1];
+  if(cur!==4){$("#materi").innerHTML=`<div class="card"><p>${t[2]}</p><p class="src">Lengkapi bagian ini dengan materi ${t[0]} Anda.</p></div>`;return}
+  $("#materi").innerHTML=`
+  <div class="lead">Hukum adat menjadi kaidah yang mengatur kehidupan bermasyarakat dan diakui keberadaannya sebagai salah satu sumber hukum yang berlaku di tengah masyarakat.</div>
+  <div class="card"><div class="n">1.5.1</div><h3>Pengertian dan Makna Hukum Adat sebagai Kaidah Hukum</h3>
+   <p>Hukum adat adalah kumpulan aturan tidak tertulis yang mengatur tata kehidupan masyarakat, disepakati bersama, dan ditegakkan melalui lembaga adat seperti Damang Kepala Adat dan Mantir Adat. Hukum adat berfungsi sebagai kaidah yang mengatur hak, kewajiban, serta batasan perilaku warga masyarakat.</p>
+   <p>Berbeda dengan hukum tertulis, hukum adat bersumber dari kebiasaan dan nilai-nilai yang diwariskan turun-temurun, namun tetap memiliki kekuatan mengikat dan diakui sebagai bagian dari sistem hukum yang berlaku di suatu wilayah (hukum positif).</p>
+   <div class="ex"><b>Contoh lembaga:</b> Damang Kepala Adat memimpin penyelesaian sengketa adat di tingkat kecamatan, dibantu oleh Mantir Adat di tingkat desa/kelurahan.</div></div>
+  <div class="card"><div class="n">1.5.2</div><h3>Jenis, Makna, dan Sanksi Pelanggaran Hukum Adat</h3>
+   <p>Pelanggaran terhadap hukum adat dapat dikelompokkan menjadi dua jenis utama:</p>
+   <ul><li><b>Pelanggaran perdata adat</b> — misalnya sengketa tanah adat, warisan, atau perselisihan antarwarga.</li><li><b>Pelanggaran pidana adat</b> — misalnya perbuatan yang mencemarkan nama baik, perzinahan menurut adat, atau perusakan simbol/benda adat.</li></ul>
+   <p>Setiap pelanggaran memiliki sanksi (sangsi) tersendiri yang ditetapkan melalui musyawarah adat, dapat berupa denda adat (jipen), penyerahan benda pusaka (gong, tempayan), permintaan maaf secara adat, atau upacara pembersihan/tampung tawar untuk memulihkan keseimbangan sosial.</p></div>
+  <div class="card src"><b>Sumber belajar:</b> Tjilik Riwut, <i>Kalimantan Membangun</i> (1958) &amp; <i>Kalimantan Manuhung</i> (1979); Damang J. Salilah, <i>Hukum Adat Kalimantan Tengah</i> (1974); Iman, S.H., <i>Bangun Keluarga Berlandaskan Hukum Adat</i> (2005); Nila Riwut, <i>Maneser Panatau Tatu Hiring</i> (2003).</div>`;
+}
+$("#nav").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cur=+b.dataset.i;renderNav();renderMateri();
+  document.querySelectorAll("#tabs button")[0].click()});
+renderNav();renderMateri();
+
+/* ====== TEKA-TEKI SILANG (dibangun otomatis) ====== */
+const words=[
+ ["MUSYAWARAH","Forum penetapan sanksi adat"],
+ ["TEMPAYAN","Benda pusaka yang dapat diserahkan sebagai sanksi, selain gong"],
+ ["PERDATA","Jenis pelanggaran adat: sengketa tanah dan warisan"],
+ ["DAMANG","Kepala Adat tingkat kecamatan"],
+ ["MANTIR","Pembantu Damang di tingkat desa/kelurahan"],
+ ["SANKSI","Hukuman atas pelanggaran adat"],
+ ["PIDANA","Jenis pelanggaran adat: perzinahan dan pencemaran nama baik"],
+ ["JIPEN","Denda adat"],
+ ["ADAT","Kebiasaan turun-temurun yang menjadi dasar hukum ini"],
+ ["GONG","Benda pusaka berbahan logam yang sering menjadi pembayaran adat"]
+];
+let placed=[];
+function buildTTS(){
+  const N=30,g={};const key=(r,c)=>r+","+c;
+  const get=(r,c)=>g[key(r,c)]||"";
+  function fits(w,r,c,d){
+    const dr=d?1:0,dc=d?0:1;let cross=0;
+    if(get(r-dr,c-dc)||get(r+dr*w.length,c+dc*w.length))return -1;
+    for(let i=0;i<w.length;i++){const rr=r+dr*i,cc=c+dc*i,ch=get(rr,cc);
+      if(ch){if(ch!==w[i])return -1;cross++}
+      else if(get(rr+dc,cc+dr)||get(rr-dc,cc-dr))return -1}
+    return cross}
+  function put(w,r,c,d){for(let i=0;i<w.length;i++)g[key(r+(d?i:0),c+(d?0:i))]=w[i]}
+  const f=words[0][0];put(f,15,10,0);placed=[{w:f,c:words[0][1],r:15,col:10,d:0}];
+  for(let k=1;k<words.length;k++){const w=words[k][0];let best=null;
+    for(let r=2;r<N-2;r++)for(let c=2;c<N-2;c++)for(const d of [0,1]){
+      if((d?r+w.length:c+w.length)>N)continue;
+      const x=fits(w,r,c,d);if(x>0&&(!best||x>best.x))best={r,c,d,x}}
+    if(best){put(w,best.r,best.c,best.d);placed.push({w,c:words[k][1],r:best.r,col:best.c,d:best.d})}}
+  let r0=99,r1=0,c0=99,c1=0;
+  placed.forEach(p=>{const er=p.r+(p.d?p.w.length-1:0),ec=p.col+(p.d?0:p.w.length-1);r0=Math.min(r0,p.r);c0=Math.min(c0,p.col);r1=Math.max(r1,er);c1=Math.max(c1,ec)});
+  placed.forEach(p=>{p.r-=r0;p.col-=c0});
+  const H=r1-r0+1,W=c1-c0+1,cells={};
+  placed.forEach(p=>{for(let i=0;i<p.w.length;i++)cells[(p.r+(p.d?i:0))+","+(p.col+(p.d?0:i))]=p.w[i]});
+  let num=0;const starts={};
+  for(let r=0;r<H;r++)for(let c=0;c<W;c++){const s=placed.filter(p=>p.r===r&&p.col===c);if(s.length){num++;starts[r+","+c]=num;s.forEach(p=>p.n=num)}}
+  const el=$("#grid");el.style.gridTemplateColumns=`repeat(${W},30px)`;el.innerHTML="";
+  for(let r=0;r<H;r++)for(let c=0;c<W;c++){const k=r+","+c,d=document.createElement("div");
+    if(cells[k]){d.className="c";d.dataset.a=cells[k];d.dataset.r=r;d.dataset.c=c;
+      d.innerHTML=(starts[k]?`<i>${starts[k]}</i>`:"")+`<input maxlength="1" aria-label="Kotak ${r+1},${c+1}">`}
+    else d.className="c blk";el.appendChild(d)}
+  $("#across").innerHTML=placed.filter(p=>!p.d).sort((a,b)=>a.n-b.n).map(p=>`<li value="${p.n}">${p.c} (${p.w.length})</li>`).join("");
+  $("#down").innerHTML=placed.filter(p=>p.d).sort((a,b)=>a.n-b.n).map(p=>`<li value="${p.n}">${p.c} (${p.w.length})</li>`).join("");
+  el.addEventListener("input",e=>{const i=e.target,c=i.parentElement;i.value=i.value.toUpperCase().replace(/[^A-Z]/g,"");
+    if(!i.value)return;const r=+c.dataset.r,cc=+c.dataset.c;
+    const inA=placed.some(p=>!p.d&&p.r===r&&cc>=p.col&&cc<p.col+p.w.length);
+    const nx=[...el.children].find(x=>x.dataset.r==(inA?r:r+1)&&x.dataset.c==(inA?cc+1:cc));
+    if(nx)nx.querySelector("input").focus()});
+}
+buildTTS();
+function ttsScore(mark){const cs=[...document.querySelectorAll("#grid .c[data-a]")];let ok=0;
+  cs.forEach(c=>{const v=c.querySelector("input").value.toUpperCase();const good=v===c.dataset.a;if(good)ok++;
+    if(mark){c.classList.toggle("ok",good);c.classList.toggle("no",!good&&v!=="")}});
+  return Math.round(ok/cs.length*100)}
+$("#ttsCheck").onclick=()=>{$("#ttsMsg").textContent="Huruf benar: "+ttsScore(true)+"% (hijau = benar, merah = salah)."};
+$("#ttsReveal").onclick=()=>{document.querySelectorAll("#grid .c[data-a]").forEach(c=>c.querySelector("input").value=c.dataset.a);ttsScore(true);$("#ttsMsg").textContent="Kunci jawaban ditampilkan."};
+$("#ttsSave").onclick=async()=>{const id=identity();if(!id){$("#ttsMsg").textContent="Isi nama dan pilih kelas dulu.";return}
+  const n=ttsScore(true);await kirim({...id,jenis:"TTS",nilai:n});$("#ttsMsg").textContent="Nilai TTS "+n+" tersimpan."};
+
+/* ====== KUIS 20 SOAL ====== */
+const Q=[
+["Hukum adat adalah kumpulan aturan yang bersifat …",["Tertulis dalam undang-undang","Tidak tertulis dan disepakati bersama","Dibuat oleh pemerintah pusat","Berlaku hanya untuk pejabat"],1],
+["Lembaga adat yang menegakkan hukum adat adalah …",["Polisi dan jaksa","Damang Kepala Adat dan Mantir Adat","Camat dan lurah","Hakim pengadilan negeri"],1],
+["Hukum adat bersumber dari …",["Keputusan presiden","Perjanjian internasional","Kebiasaan dan nilai yang diwariskan turun-temurun","Peraturan daerah saja"],2],
+["Perbedaan hukum adat dengan hukum tertulis adalah hukum adat …",["Tidak memiliki kekuatan mengikat","Tidak tertulis tetapi tetap diakui","Hanya berlaku di kota","Dibuat oleh DPR"],1],
+["Damang Kepala Adat memimpin penyelesaian sengketa adat di tingkat …",["Desa","Kecamatan","Provinsi","Nasional"],1],
+["Mantir Adat membantu Damang di tingkat …",["Desa/kelurahan","Kabupaten","Provinsi","Negara"],0],
+["Pelanggaran hukum adat dikelompokkan menjadi dua jenis, yaitu …",["Ringan dan berat","Perdata adat dan pidana adat","Lisan dan tertulis","Sosial dan politik"],1],
+["Sengketa tanah adat termasuk pelanggaran …",["Pidana adat","Perdata adat","Administrasi","Internasional"],1],
+["Perselisihan warisan antarwarga termasuk pelanggaran …",["Perdata adat","Pidana adat","Pidana militer","Tata negara"],0],
+["Perzinahan menurut adat termasuk pelanggaran …",["Perdata adat","Pidana adat","Pajak","Perdagangan"],1],
+["Perusakan simbol atau benda adat termasuk pelanggaran …",["Perdata adat","Pidana adat","Ekonomi","Kebiasaan baik"],1],
+["Perbuatan yang mencemarkan nama baik termasuk pelanggaran …",["Pidana adat","Perdata adat","Hukum dagang","Hukum laut"],0],
+["Sanksi adat ditetapkan melalui …",["Undian","Musyawarah adat","Pemungutan suara nasional","Keputusan sepihak"],1],
+["Denda adat dikenal dengan istilah …",["Jipen","Sandung","Balian","Belom bahadat"],0],
+["Benda pusaka yang dapat diserahkan sebagai sanksi adalah …",["Gong dan tempayan","Televisi dan radio","Mobil dan motor","Emas batangan saja"],0],
+["Upacara pembersihan untuk memulihkan keseimbangan sosial disebut …",["Tampung tawar","Pesta panen","Lomba adat","Pawai budaya"],0],
+["Tujuan utama sanksi adat adalah …",["Mempermalukan pelaku","Memulihkan keseimbangan sosial","Menambah pendapatan desa","Mengusir pelaku"],1],
+["Maksud “hukum positif” adalah hukum yang …",["Sudah tidak berlaku","Berlaku di suatu wilayah","Hanya ada di buku","Dibuat oleh negara asing"],1],
+["Hukum adat berfungsi mengatur …",["Hak, kewajiban, dan batasan perilaku warga","Harga barang","Cuaca","Kurikulum sekolah"],0],
+["Permintaan maaf secara adat merupakan salah satu bentuk …",["Hadiah","Sanksi adat","Pajak","Upah"],1]
+];
+function renderQuiz(){$("#quiz").innerHTML=Q.map((q,i)=>`<div class="q" data-i="${i}"><p>${i+1}. ${q[0]}</p>${q[1].map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}">${o}</label>`).join("")}</div>`).join("");$("#qResult").innerHTML="";$("#qSubmit").disabled=false}
+renderQuiz();
+$("#qReset").onclick=renderQuiz;
+$("#qSubmit").onclick=async()=>{
+  const id=identity();if(!id){alert("Isi nama dan pilih kelas di bagian atas dulu.");window.scrollTo({top:0,behavior:"smooth"});return}
+  let benar=0;
+  Q.forEach((q,i)=>{const box=document.querySelector(`.q[data-i="${i}"]`),sel=box.querySelector("input:checked");
+    box.querySelectorAll("label").forEach((l,j)=>{if(j===q[2])l.classList.add("right");else if(sel&&+sel.value===j)l.classList.add("wrong")});
+    if(sel&&+sel.value===q[2])benar++;box.querySelectorAll("input").forEach(x=>x.disabled=true)});
+  const nilai=benar*5;$("#qSubmit").disabled=true;
+  $("#qResult").innerHTML=`<div class="card"><div class="score">${nilai}</div><p>${id.nama} (${id.kelas}) menjawab benar ${benar} dari 20 soal.</p><p class="msg" id="qSend">Mengirim nilai…</p></div>`;
+  const ok=await kirim({...id,jenis:"Kuis",nilai});
+  $("#qSend").textContent=ok?"Nilai tersimpan ke rekap.":"Nilai tersimpan di perangkat ini (URL Apps Script belum diisi atau gagal terkirim).";
+  $("#qResult").scrollIntoView({behavior:"smooth"})};
+
+/* ====== KIRIM & REKAP ====== */
+async function kirim(d){
+  d.waktu=new Date().toLocaleString("id-ID");
+  const l=safeLS("rekap");l.push(d);safeLS("rekap",l);
+  if(!APPS_SCRIPT_URL)return false;
+  try{await fetch(APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)});return true}catch(e){return false}}
+async function loadRekap(){
+  let rows=[],src="perangkat ini";
+  if(APPS_SCRIPT_URL){try{const r=await fetch(APPS_SCRIPT_URL+"?action=list");const j=await r.json();if(Array.isArray(j)){rows=j;src="Google Spreadsheet"}}catch(e){}}
+  if(!rows.length)rows=safeLS("rekap");
+  const k=$("#fKelas").value;if(k)rows=rows.filter(x=>x.kelas===k);
+  $("#rMsg").textContent=rows.length?`Menampilkan ${rows.length} data dari ${src}.`:"Belum ada nilai tercatat. Selesaikan kuis atau TTS terlebih dahulu.";
+  $("#rBody").innerHTML=rows.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.nama)}</td><td>${esc(x.kelas)}</td><td>${esc(x.jenis)}</td><td><b>${esc(x.nilai)}</b></td><td>${esc(x.waktu)}</td></tr>`).join("")}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+$("#reload").onclick=loadRekap;$("#fKelas").onchange=loadRekap;
+</script>
+</body>
+</html>
